@@ -36,15 +36,13 @@ class CurrentViewController: UIViewController, UITableViewDataSource, FBSDKShari
         
         let currName = self.currStock!["Name"] as? String
         let currPrice = String(format: "%.2f", (self.currStock!["LastPrice"] as? Float)!)
-        
-
-            let content: FBSDKShareLinkContent = FBSDKShareLinkContent()
-       
-            content.contentURL = NSURL(string: "http://finance.yahoo.com/q?s=\(self.currSymbol!)")
-            content.contentTitle = "Current Stock Price of \(currName!) is $\(currPrice)"
-            content.contentDescription = "Stock Information of \(currName!) (\(self.currSymbol!))"
-            content.imageURL = NSURL(string: "https://chart.finance.yahoo.com/t?s=\(self.currSymbol!)&lang=en-US&width=450&height=380")
-            FBSDKShareDialog.showFromViewController(self, withContent: content, delegate: self)
+        let content: FBSDKShareLinkContent = FBSDKShareLinkContent()
+   
+        content.contentURL = NSURL(string: "http://finance.yahoo.com/q?s=\(self.currSymbol!)")
+        content.contentTitle = "Current Stock Price of \(currName!) is $\(currPrice)"
+        content.contentDescription = "Stock Information of \(currName!) (\(self.currSymbol!))"
+        content.imageURL = NSURL(string: "https://chart.finance.yahoo.com/t?s=\(self.currSymbol!)&lang=en-US&width=450&height=380")
+        FBSDKShareDialog.showFromViewController(self, withContent: content, delegate: self)
        
     }
 
@@ -101,7 +99,6 @@ class CurrentViewController: UIViewController, UITableViewDataSource, FBSDKShari
     
     @IBAction func newsBtnTapped(sender: AnyObject) {
         guide=2
-        //print("guide: ",guide)
     }
     
     
@@ -110,7 +107,6 @@ class CurrentViewController: UIViewController, UITableViewDataSource, FBSDKShari
     }
     
     func sharer(sharer: FBSDKSharing!, didCompleteWithResults results: [NSObject : AnyObject]!) {
-        
         
         if results["postId"] != nil {
             print("Posted Successfully!")

@@ -108,7 +108,6 @@ class ViewController: UIViewController, UITableViewDataSource, UITextFieldDelega
         }
     }
     
-    
     func refresh(){
         
         activityIndicator.hidden = false
@@ -117,11 +116,9 @@ class ViewController: UIViewController, UITableViewDataSource, UITextFieldDelega
         NSTimer.scheduledTimerWithTimeInterval(1.1, target: self, selector: #selector(ViewController.hideIND), userInfo: nil, repeats: false)
     }
     
-    
     func hideIND(timer : NSTimer) {
         activityIndicator.hidden = true
     }
-    
     
     //text field autocomplete
     func autoCompleteTextField() -> UITextField {
@@ -214,7 +211,6 @@ class ViewController: UIViewController, UITableViewDataSource, UITextFieldDelega
         inputText.text = item.text.characters.split{$0 == "-"}.map(String.init)[0]
     }
 
-    
     func callQuoteAPI(sym: String) -> [String: AnyObject]{
         
         let urlString: String = "https://aabbccwe1314.appspot.com/index.php?searchSymbol=\(sym)"
@@ -330,7 +326,6 @@ class ViewController: UIViewController, UITableViewDataSource, UITextFieldDelega
         return true
     }
     
-    
     func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
         if editingStyle == .Delete {
             let currentCell = tableView.cellForRowAtIndexPath(indexPath)! as! FavoriteTableViewCell
@@ -357,8 +352,6 @@ class ViewController: UIViewController, UITableViewDataSource, UITextFieldDelega
         self.searchedStock = callQuoteAPI(selectedSymbol!)
         self.performSegueWithIdentifier("CurrentView", sender: indexPath)
     }
-    
-    
     
     override func touchesEnded(touches: Set<UITouch>, withEvent event: UIEvent?) {
         inputText.resignFirstResponder()

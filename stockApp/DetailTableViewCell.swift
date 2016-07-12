@@ -14,7 +14,6 @@ class DetailTableViewCell: UITableViewCell {
     
     @IBOutlet weak var contentLabel: UILabel!
     
-    
     @IBOutlet weak var arrow: UIImageView!
     
     override func awakeFromNib() {
