@@ -1,0 +1,6 @@
+framework module MJAutoComplete {
+  umbrella header "MJAutoComplete-umbrella.h"
+
+  export *
+  module * { export * }
+}

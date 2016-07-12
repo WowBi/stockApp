@@ -1,0 +1,19 @@
+PODS:
+  - Alamofire (3.3.1)
+  - CCAutocomplete (0.0.4)
+  - MJAutoComplete (1.1.1)
+  - MLPAutoCompleteTextField (1.5)
+
+DEPENDENCIES:
+  - Alamofire
+  - CCAutocomplete
+  - MJAutoComplete
+  - MLPAutoCompleteTextField
+
+SPEC CHECKSUMS:
+  Alamofire: 369bc67b6f5ac33ded3648d7bd21c5bfb91c2ecc
+  CCAutocomplete: 7e54cab43d10eb9e5385d5b3409e9dee0b7af714
+  MJAutoComplete: dd8e997dcf32fd4ca58e6a9f8497f171099b3a20
+  MLPAutoCompleteTextField: ba4d507bbff2bd4f139d4197814fc8dd39caf77e
+
+COCOAPODS: 0.39.0

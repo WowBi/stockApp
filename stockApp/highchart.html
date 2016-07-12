@@ -1,0 +1,152 @@
+<html>
+    <head>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+        <script src="https://code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+        <script src="https://code.highcharts.com/stock/highstock.js"></script>
+        <script src="https://code.highcharts.com/stock/modules/exporting.js"></script>
+        <script type="text/javascript">
+            //var symbol="AAPL"
+            //var theURL="https://aabbccwe1314.appspot.com/index.php"
+           var theURL="http://stocksearchbi-env.us-west-2.elasticbeanstalk.com/index.php";
+            //var theURL="index.php"
+            
+            //document.getElementById('high').innerHTML='<p>success!!!!!</p>'
+            //setHighCharts(symbol);
+            
+            function setHighCharts(symbol){
+                console.log("start");
+                $.ajax({
+                       url: theURL,
+                       data:{
+                       "highChartsQuery":symbol
+                       },
+                       dataType:"json",
+                       context:this,
+                       success: function(data){
+                       console.log(data);
+                       var chartSeries=[];
+                       //chartSeries=getOHLC(jQuery.parseJSON(data));
+                       chartSeries=getOHLC(data);
+                       
+                       $('#high').highcharts('StockChart', {
+                                                chart:{
+                                                renderTo:'#high'
+                                                },
+                                                
+                                                rangeSelector : {
+                                                inputEnabled:false,
+                                                selected : 0,
+                                                buttons: [{
+                                                          type: 'week',
+                                                          count: 1,
+                                                          text: '1w'
+                                                          },{
+                                                          type: 'month',
+                                                          count: 1,
+                                                          text: '1m'
+                                                          }, {
+                                                          type: 'month',
+                                                          count: 3,
+                                                          text: '3m'
+                                                          }, {
+                                                          type: 'month',
+                                                          count: 6,
+                                                          text: '6m'
+                                                          }, {
+                                                          type: 'ytd',
+                                                          text: 'YTD'
+                                                          }, {
+                                                          type: 'year',
+                                                          count: 1,
+                                                          text: '1y'
+                                                          }, {
+                                                          type: 'all',
+                                                          text: 'All'
+                                                          }],
+                                                inputDateFormat: '%H:%M:%S.%L',
+                                                inputEditDateFormat:'%b %e'
+                                                },
+                                                
+                                                exporting: {
+                                                enabled: false
+                                                },
+                                                
+                                                title : {
+                                                text : symbol+' Stock Price'
+                                                },
+                                                
+                                                yAxis: {
+                                                
+                                                title: {
+                                                text: "Stock Value"
+                                                }
+                                                },
+                                                xAxis:{
+                                                type:"datetime"
+                                                },
+                                                
+                                                series : [{
+                                                          name : symbol+' Stock Price',
+                                                          //data : data,
+                                                          data:chartSeries,
+                                                          type : 'area',
+                                                          threshold : null,
+                                                          tooltip : {
+                                                          valueDecimals : 2,
+                                                          valuePrefix: "$"
+                                                          },
+                                                          fillColor : {
+                                                          linearGradient : {
+                                                          x1: 0,
+                                                          y1: 0,
+                                                          x2: 0,
+                                                          y2: 1
+                                                          },
+                                                          stops : [
+                                                                   [0, Highcharts.getOptions().colors[0]],
+                                                                   [1, Highcharts.Color(Highcharts.getOptions().colors[0]).setOpacity(0).get('rgba')]
+                                                                   ]
+                                                          }
+                                                          }]
+                                                });
+                       
+                       
+                       }
+                       });
+                       
+                       
+                       
+                       function _fixDate(dateIn) {
+                           var dat = new Date(dateIn);
+                           return Date.UTC(dat.getFullYear(), dat.getMonth(), dat.getDate());
+                       };
+                       
+                       function getOHLC(json) {
+                           var dates = json.Dates || [];
+                           var elements = json.Elements || [];
+                           var chartSeries = [];
+                           
+                           if (elements[0]){
+                               
+                               for (var i = 0, datLen = dates.length; i < datLen; i++) {
+                                   var dat = _fixDate( dates[i] );
+                                   var pointData = [
+                                                    dat,
+                                                    elements[0].DataSeries['open'].values[i],
+                                                    elements[0].DataSeries['high'].values[i],
+                                                    elements[0].DataSeries['low'].values[i],
+                                                    elements[0].DataSeries['close'].values[i]
+                                                    ];
+                                                    chartSeries.push( pointData );
+                               };
+                           }
+                           return chartSeries;
+                       };
+            }
+        </script>
+    </head>
+    <body>
+        <br />
+        <div id='high'></div>
+    </body>
+</html>
